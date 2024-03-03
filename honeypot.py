@@ -7,7 +7,11 @@ import uuid
 import argparse
 import os
 
-host_key = paramiko.RSAKey.generate(2048)
+if not os.path.exists('.host.key'):
+    host_key = paramiko.RSAKey.generate(2048)
+    host_key.write_private_key_file('.host.key')
+else:
+    host_key = paramiko.RSAKey(filename='.host.key')
 
 logFile = 'honeypot.log'
 
